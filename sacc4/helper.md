@@ -29,3 +29,15 @@ Get all keys
 ```bash
 peer chaincode query -n sacc4 -c '{"Args":["all"]}' -C channel1 --tls --cafile /tmp/hyperledger/mars.morgen.net/peers/peer1/tls-msp/tlscacerts/tls-ca-tls-morgen-net-7052.pem
 ```
+
+## Upgrade the chaincode after modification
+
+After modification of the chaincode we have to install the chaincode under a new version first.
+```bash
+peer chaincode install -n sacc4 -v 1.1 -p github.com/hyperledger/fabric-samples/chaincode/sacc4/
+```
+
+After installation of the new chaincode version we can fire up the upgrade of the chaincode.
+```bash
+peer chaincode upgrade -o orderer.morgen.net:7050 --tls --cafile /tmp/hyperledger/mars.morgen.net/peers/peer0/tls-msp/tlscacerts/tls-ca-tls-morgen-net-7052.pem -C channel1 -n sacc4 -v 1.1 -c '{"Args":["msg","upgrade"]}'
+```

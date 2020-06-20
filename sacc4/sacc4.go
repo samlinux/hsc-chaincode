@@ -219,15 +219,15 @@ func getAllTx (stub shim.ChaincodeStubInterface, args []string) peer.Response {
 		buffer.WriteString("\"")
 
 		buffer.WriteString(", \"Value\":")
-		// if it was a delete operation on given key, then we need to set the
-		//corresponding value null. Else, we will write the response.Value
-		//as-is (as the Value itself a JSON marble)
+		
+		buffer.WriteString("\"")
 		if response.IsDelete {
 			buffer.WriteString("null")
-		} else {
+		} else {	
 			buffer.WriteString(string(response.Value))
 		}
-
+		buffer.WriteString("\"")
+		
 		buffer.WriteString(", \"Timestamp\":")
 		buffer.WriteString("\"")
 		buffer.WriteString(time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String())
